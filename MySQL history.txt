@@ -1,0 +1,1562 @@
+Database changed
+mysql> select *from countries where region_id = 73;
++------------+--------------+-----------+
+| country_id | country_name | region_id |
++------------+--------------+-----------+
+| kh         | qsiush       |        73 |
++------------+--------------+-----------+
+1 row in set (0.06 sec)
+
+mysql> select *from countries where region_id = 72;
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id = 72;
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id > 72;
++------------+--------------+-----------+
+| country_id | country_name | region_id |
++------------+--------------+-----------+
+| kh         | qsiush       |        73 |
++------------+--------------+-----------+
+1 row in set (0.05 sec)
+
+mysql> select *from countries where region_id < 72;
++------------+----------------+-----------+
+| country_id | country_name   | region_id |
++------------+----------------+-----------+
+| IN         | INDIA          |         1 |
+| US         | UNITED STATES  |         2 |
+| UK         | UNITED KINGDOM |         3 |
+| CA         | CANADA         |         4 |
+| AU         | AUSTRALIA      |         5 |
+| we         | gugded         |         7 |
+| bc         | nfhkhl         |        32 |
+| jx         | xkdhdh         |        43 |
++------------+----------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id <> 73;
++------------+----------------+-----------+
+| country_id | country_name   | region_id |
++------------+----------------+-----------+
+| IN         | INDIA          |         1 |
+| US         | UNITED STATES  |         2 |
+| UK         | UNITED KINGDOM |         3 |
+| CA         | CANADA         |         4 |
+| AU         | AUSTRALIA      |         5 |
+| we         | gugded         |         7 |
+| bc         | nfhkhl         |        32 |
+| jx         | xkdhdh         |        43 |
++------------+----------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id != 73;
++------------+----------------+-----------+
+| country_id | country_name   | region_id |
++------------+----------------+-----------+
+| IN         | INDIA          |         1 |
+| US         | UNITED STATES  |         2 |
+| UK         | UNITED KINGDOM |         3 |
+| CA         | CANADA         |         4 |
+| AU         | AUSTRALIA      |         5 |
+| we         | gugded         |         7 |
+| bc         | nfhkhl         |        32 |
+| jx         | xkdhdh         |        43 |
++------------+----------------+-----------+
+8 rows in set (0.00 sec)mysql> select *from countries order by region_id where region_id > 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where region_id > 2' at line 1
+mysql> select *from countries order by region_id where region_id > '2';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where region_id > '2'' at line 1
+mysql> select *from countries  where region_id > 2 order by country_name;
++------------+----------------+-----------+
+| country_id | country_name   | region_id |
++------------+----------------+-----------+
+| AU         | AUSTRALIA      |         5 |
+| CA         | CANADA         |         4 |
+| we         | gugded         |         7 |
+| bc         | nfhkhl         |        32 |
+| kh         | qsiush         |        73 |
+| UK         | UNITED KINGDOM |         3 |
+| jx         | xkdhdh         |        43 |
++------------+----------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select *from countries  order by country_name;
++------------+----------------+-----------+
+| country_id | country_name   | region_id |
++------------+----------------+-----------+
+| AU         | AUSTRALIA      |         5 |
+| CA         | CANADA         |         4 |
+| we         | gugded         |         7 |
+| IN         | INDIA          |         1 |
+| bc         | nfhkhl         |        32 |
+| kh         | qsiush         |        73 |
+| UK         | UNITED KINGDOM |         3 |
+| US         | UNITED STATES  |         2 |
+| jx         | xkdhdh         |        43 |
++------------+----------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> 
+mysql> alter table countries add column ddate date;
+Query OK, 9 rows affected (0.06 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | varchar(8)  | YES  |     | NULL    |       |
+| country_name | varchar(20) | YES  |     | NULL    |       |
+| region_id    | int(2)      | NO   | PRI | 0       |       |
+| ddate        | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+mysql> insert into countries ddate values (1999-01-11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ddate values (1999-01-11)' at line 1
+mysql> insert into countries ddate values ('1999-01-11');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ddate values ('1999-01-11')' at line 1
+mysql> insert into countries ddate value '1999-01-11';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ddate value '1999-01-11'' at line 1
+mysql> insert into countries ddate values '1999-01-11';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ddate values '1999-01-11'' at line 1
+mysql> insert into countries (ddate) values '1999-01-11';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1999-01-11'' at line 1
+mysql> insert into countries (ddate) values ('1999-01-11');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into countries (ddate) values ('2002-02-14'),('2000-02-14'),('2121-02-11');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+mysql> insert into countries (ddate) values ('2002-02-14'),('2000-04-14'),('2121-03-11');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+mysql> insert into countries (ddate) values ('2002-02-14'),('2000-04-15'),('2121-03-11');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+mysql> insert into countries (ddate) values ('2002-02-14');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+mysql> select *from countries;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| NULL       | NULL           |         0 | 1999-01-11 |
+| IN         | INDIA          |         1 | NULL       |
+| US         | UNITED STATES  |         2 | NULL       |
+| UK         | UNITED KINGDOM |         3 | NULL       |
+| CA         | CANADA         |         4 | NULL       |
+| AU         | AUSTRALIA      |         5 | NULL       |
+| we         | gugded         |         7 | NULL       |
+| bc         | nfhkhl         |        32 | NULL       |
+| jx         | xkdhdh         |        43 | NULL       |
+| kh         | qsiush         |        73 | NULL       |
++------------+----------------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from countries where region_id =0;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select *from countries;
++------------+----------------+-----------+-------+
+| country_id | country_name   | region_id | ddate |
++------------+----------------+-----------+-------+
+| IN         | INDIA          |         1 | NULL  |
+| US         | UNITED STATES  |         2 | NULL  |
+| UK         | UNITED KINGDOM |         3 | NULL  |
+| CA         | CANADA         |         4 | NULL  |
+| AU         | AUSTRALIA      |         5 | NULL  |
+| we         | gugded         |         7 | NULL  |
+| bc         | nfhkhl         |        32 | NULL  |
+| jx         | xkdhdh         |        43 | NULL  |
+| kh         | qsiush         |        73 | NULL  |
++------------+----------------+-----------+-------+
+9 rows in set (0.00 sec)
+
+mysql> update ddate set ddate = '2002-11-23' from countries where region_id = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries where region_id = 1' at line 1
+mysql> update countries set ddate = '2002-11-23' from countries where region_id = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries where region_id = 1' at line 1
+mysql> update countries set ddate = '2002-02-12' where region_id=1;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from countries;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | NULL       |
+| UK         | UNITED KINGDOM |         3 | NULL       |
+| CA         | CANADA         |         4 | NULL       |
+| AU         | AUSTRALIA      |         5 | NULL       |
+| we         | gugded         |         7 | NULL       |
+| bc         | nfhkhl         |        32 | NULL       |
+| jx         | xkdhdh         |        43 | NULL       |
+| kh         | qsiush         |        73 | NULL       |
++------------+----------------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> update countries set ddate = '2002-11-23' from countries where region_id = 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries where region_id = 2' at line 1
+mysql> update countries set ddate = '2002-11-20' from countries where region_id = 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries where region_id = 2' at line 1
+mysql> update countries set ddate = '1990-01-23' where region_id = 2;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from countries where year(ddate) = 2002;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where year(ddate) = 2002 order by ddate;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where year(ddate) = 2002 order by region_id;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where year(ddate) = 2002 order by country_id;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where year(ddate) = 2002 order by country_name;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where ddate = null;
+Empty set (0.00 sec)
+
+mysql> select *from countries where ddate is null;
++------------+----------------+-----------+-------+
+| country_id | country_name   | region_id | ddate |
++------------+----------------+-----------+-------+
+| UK         | UNITED KINGDOM |         3 | NULL  |
+| CA         | CANADA         |         4 | NULL  |
+| AU         | AUSTRALIA      |         5 | NULL  |
+| we         | gugded         |         7 | NULL  |
+| bc         | nfhkhl         |        32 | NULL  |
+| jx         | xkdhdh         |        43 | NULL  |
+| kh         | qsiush         |        73 | NULL  |
++------------+----------------+-----------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id <> 1 and region_id <> 2 order by region_id desc;
++------------+----------------+-----------+-------+
+| country_id | country_name   | region_id | ddate |
++------------+----------------+-----------+-------+
+| kh         | qsiush         |        73 | NULL  |
+| jx         | xkdhdh         |        43 | NULL  |
+| bc         | nfhkhl         |        32 | NULL  |
+| we         | gugded         |         7 | NULL  |
+| AU         | AUSTRALIA      |         5 | NULL  |
+| CA         | CANADA         |         4 | NULL  |
+| UK         | UNITED KINGDOM |         3 | NULL  |
++------------+----------------+-----------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select *from countries
+    -> ;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | NULL       |
+| CA         | CANADA         |         4 | NULL       |
+| AU         | AUSTRALIA      |         5 | NULL       |
+| we         | gugded         |         7 | NULL       |
+| bc         | nfhkhl         |        32 | NULL       |
+| jx         | xkdhdh         |        43 | NULL       |
+| kh         | qsiush         |        73 | NULL       |
++------------+----------------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> update countries set ddate = '1899-09-09' where region_id = 3;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '1891-09-09' where region_id = 4;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '1991-09-09' where region_id = 5;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '2091-09-09' where region_id = 7;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '2001-10-09' where region_id = 32;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '2021-09-09' where region_id = 43;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update countries set ddate = '2021-02-12' where region_id = 73;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from countries;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| AU         | AUSTRALIA      |         5 | 1991-09-09 |
+| we         | gugded         |         7 | 2091-09-09 |
+| bc         | nfhkhl         |        32 | 2001-10-09 |
+| jx         | xkdhdh         |        43 | 2021-09-09 |
+| kh         | qsiush         |        73 | 2021-02-12 |
++------------+----------------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select *from countries where '1' in region_id  ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'region_id' at line 1
+mysql> select *from countries where   region_id  in (1,10);
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where   region_id  in (10);
+Empty set (0.00 sec)
+
+mysql> select *from countries where   region_id  in (1);
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where   region_id  in (1,2);
++------------+---------------+-----------+------------+
+| country_id | country_name  | region_id | ddate      |
++------------+---------------+-----------+------------+
+| IN         | INDIA         |         1 | 2002-02-12 |
+| US         | UNITED STATES |         2 | 1990-01-23 |
++------------+---------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from countries where   region_id  in (1,2,3,4,5);
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| AU         | AUSTRALIA      |         5 | 1991-09-09 |
++------------+----------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from countries where country_id in "uk";;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"uk"' at line 1
+ERROR: 
+No query specified
+
+mysql> select *from countries where country_id in "uk";;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"uk"' at line 1
+ERROR: 
+No query specified
+
+mysql> select *from countries where country_id in "uk";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"uk"' at line 1
+mysql> select *from countries where country_id in ("uk");
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
++------------+----------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where region_id between 1 and 10;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| AU         | AUSTRALIA      |         5 | 1991-09-09 |
+| we         | gugded         |         7 | 2091-09-09 |
++------------+----------------+-----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id between 1 and 5;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| AU         | AUSTRALIA      |         5 | 1991-09-09 |
++------------+----------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id between 1 and not 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not 5' at line 1
+mysql> and any all ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and any all' at line 1
+mysql> select *from countries where country_name like un%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%' at line 1
+mysql> select *from countries where country_name like 'un%';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
++------------+----------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from countries where country_name like '_n%';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
++------------+----------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from countries where country_name like '__n%';
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| CA         | CANADA       |         4 | 1891-09-09 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where country_name like '%__n';
+Empty set (0.00 sec)
+
+mysql> select *from countries where country_name like '%n__';
+Empty set (0.00 sec)
+
+mysql> select *from countries where country_name like '%t__';
++------------+---------------+-----------+------------+
+| country_id | country_name  | region_id | ddate      |
++------------+---------------+-----------+------------+
+| US         | UNITED STATES |         2 | 1990-01-23 |
++------------+---------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where country_name like '%d__';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| we         | gugded         |         7 | 2091-09-09 |
++------------+----------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from countries where country_name like '%d';
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| we         | gugded       |         7 | 2091-09-09 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where country_name like '%dom';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
++------------+----------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select ddate from countries where month(ddate) = '09';
++------------+
+| ddate      |
++------------+
+| 1899-09-09 |
+| 1891-09-09 |
+| 1991-09-09 |
+| 2091-09-09 |
+| 2021-09-09 |
++------------+
+5 rows in set (0.00 sec)
+
+mysql> select ddate req from countries where month(ddate) = '09';
++------------+
+| req        |
++------------+
+| 1899-09-09 |
+| 1891-09-09 |
+| 1991-09-09 |
+| 2091-09-09 |
+| 2021-09-09 |
++------------+
+5 rows in set (0.00 sec)
+
+mysql> select ddate as  req from countries where month(ddate) = '09';
++------------+
+| req        |
++------------+
+| 1899-09-09 |
+| 1891-09-09 |
+| 1991-09-09 |
+| 2091-09-09 |
+| 2021-09-09 |
++------------+
+5 rows in set (0.00 sec)
+
+mysql> select ddate(req) from countries where month(ddate) = '09';
+ERROR 1305 (42000): FUNCTION sai.ddate does not exist
+mysql> select ddate req from countries where day(ddate) = '09';
++------------+
+| req        |
++------------+
+| 1899-09-09 |
+| 1891-09-09 |
+| 1991-09-09 |
+| 2091-09-09 |
+| 2001-10-09 |
+| 2021-09-09 |
++------------+
+6 rows in set (0.06 sec)
+
+mysql> select ddate req from countries where year(ddate) = '1991';
++------------+
+| req        |
++------------+
+| 1991-09-09 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select ddate req from countries where year(ddate) = '91';
+Empty set (0.00 sec)
+
+mysql> select ddate req from countries where year(ddate) = '19';
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id not between 4 and 34;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| jx         | xkdhdh         |        43 | 2021-09-09 |
+| kh         | qsiush         |        73 | 2021-02-12 |
++------------+----------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id < 4 and region_id> 34;
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id < 4 ;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
++------------+----------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id < 4 and region_id > 34;
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id > 34;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| jx         | xkdhdh       |        43 | 2021-09-09 |
+| kh         | qsiush       |        73 | 2021-02-12 |
++------------+--------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id < 4 or region_id > 34;
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| jx         | xkdhdh         |        43 | 2021-09-09 |
+| kh         | qsiush         |        73 | 2021-02-12 |
++------------+----------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from countries where region_id <= 4 and region_id >= 34;
+Empty set (0.00 sec)
+
+mysql> select *from countries where region_id >= 4 and region_id <= 34;
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| CA         | CANADA       |         4 | 1891-09-09 |
+| AU         | AUSTRALIA    |         5 | 1991-09-09 |
+| we         | gugded       |         7 | 2091-09-09 |
+| bc         | nfhkhl       |        32 | 2001-10-09 |
++------------+--------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from countries where country_name like %ca%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%ca%' at line 1
+mysql> select *from countries where country_name like '%ca%';
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| CA         | CANADA       |         4 | 1891-09-09 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where country_name like '%nd%';
++------------+--------------+-----------+------------+
+| country_id | country_name | region_id | ddate      |
++------------+--------------+-----------+------------+
+| IN         | INDIA        |         1 | 2002-02-12 |
++------------+--------------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where country_name not like '%nd%';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| US         | UNITED STATES  |         2 | 1990-01-23 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| AU         | AUSTRALIA      |         5 | 1991-09-09 |
+| we         | gugded         |         7 | 2091-09-09 |
+| bc         | nfhkhl         |        32 | 2001-10-09 |
+| jx         | xkdhdh         |        43 | 2021-09-09 |
+| kh         | qsiush         |        73 | 2021-02-12 |
++------------+----------------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select *from countries where country_name not like '%s%';
++------------+----------------+-----------+------------+
+| country_id | country_name   | region_id | ddate      |
++------------+----------------+-----------+------------+
+| IN         | INDIA          |         1 | 2002-02-12 |
+| UK         | UNITED KINGDOM |         3 | 1899-09-09 |
+| CA         | CANADA         |         4 | 1891-09-09 |
+| we         | gugded         |         7 | 2091-09-09 |
+| bc         | nfhkhl         |        32 | 2001-10-09 |
+| jx         | xkdhdh         |        43 | 2021-09-09 |
++------------+----------------+-----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select null=5;
++--------+
+| null=5 |
++--------+
+|   NULL |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select null=null;
++-----------+
+| null=null |
++-----------+
+|      NULL |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select *from countries where region_id is not like '2';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '2'' at line 1
+mysql> select *from countries where region_id is not like 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like 2' at line 1
+mysql> select *from countries where region_id*1.1 req;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'req' at line 1
+mysql> select *from countries where region_id*1.1 as req;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as req' at line 1
+mysql> select *from countries where region_id*1.1 as req order by region_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as req order by region_id' at line 1
+mysql> select *from countries where (region_id*1.1) as req order by region_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as req order by region_id' at line 1
+mysql> select region_id * 14 req from countries;
++------+
+| req  |
++------+
+|   14 |
+|   28 |
+|   42 |
+|   56 |
+|   70 |
+|   98 |
+|  448 |
+|  602 |
+| 1022 |
++------+
+9 rows in set (0.00 sec)
+
+mysql> alter table countries modify column region_id auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 1
+mysql> alter table countries add column region_id auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 1
+mysql> alter table countries change column region_id1 region_id auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 1
+mysql> alter table countries change column region_id1 region_id auto increment primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment primary key' at line 1
+mysql> alter table countries change column region_id1 region_id int auto increment primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment primary key' at line 1
+mysql> alter table countries add column primary key(region_id,country_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(region_id,country_id)' at line 1
+mysql> alter table countries add columns primary key(region_id,country_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(region_id,country_id)' at line 1
+mysql> alter table countries modify column primary key(region_id,country_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(region_id,country_id)' at line 1
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> not tee
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not tee' at line 1
+mysql> nottee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nottee' at line 1
+mysql> mysql> create table country as select ddate from countries;
+Query OK, 9 rows affected (0.06 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select *from country;
++------------+
+| ddate      |
++------------+
+| 2002-02-12 |
+| 1990-01-23 |
+| 1899-09-09 |
+| 1891-09-09 |
+| 1991-09-09 |
+| 2091-09-09 |
+| 2001-10-09 |
+| 2021-09-09 |
+| 2021-02-12 |
++------------+
+9 rows in set (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_sai |
++---------------+
+| countries     |
+| country       |
+| student       |
++---------------+
+3 rows in set (0.05 sec)
+
+mysql> alter table country add column name varchar(11);
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select *from country;
++------------+------+
+| ddate      | name |
++------------+------+
+| 2002-02-12 | NULL |
+| 1990-01-23 | NULL |
+| 1899-09-09 | NULL |
+| 1891-09-09 | NULL |
+| 1991-09-09 | NULL |
+| 2091-09-09 | NULL |
+| 2001-10-09 | NULL |
+| 2021-09-09 | NULL |
+| 2021-02-12 | NULL |
++------------+------+
+9 rows in set (0.00 sec)
+
+mysql> alter table country alter column name year;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'year' at line 1
+mysql> alter table country alter column name char;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'char' at line 1
+mysql> alter table country alter column name char(2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'char(2)' at line 1
+mysql> alter table country alter column ddate year;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'year' at line 1
+mysql> alter table country add cname char(2);
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> alter table country drop column cname;
+Query OK, 9 rows affected (0.10 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> drop column name from country;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column name from country' at line 1
+mysql> alter table country drop column name;
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> drop table country;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_sai |
++---------------+
+| countries     |
+| student       |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> create table country as select ddate from countries;
+Query OK, 9 rows affected (0.06 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> alter table country add column name char(2)'
+    '> ;
+    '> '
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''
+;
+'' at line 1
+mysql> alter table country add column name char(2);
+Query OK, 9 rows affected (0.10 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> alter table country modify column name varchar(21);
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select *from country;
++------------+------+
+| ddate      | name |
++------------+------+
+| 2002-02-12 | NULL |
+| 1990-01-23 | NULL |
+| 1899-09-09 | NULL |
+| 1891-09-09 | NULL |
+| 1991-09-09 | NULL |
+| 2091-09-09 | NULL |
+| 2001-10-09 | NULL |
+| 2021-09-09 | NULL |
+| 2021-02-12 | NULL |
++------------+------+
+9 rows in set (0.00 sec)
+
+mysql> desc country;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ddate | date        | YES  |     | NULL    |       |
+| name  | varchar(21) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.06 sec)
+
+mysql> alter table country drop column name;
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| ddate | date | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.06 sec)
+
+mysql> alter table country add primary key(ddate);
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++-------+------+------+-----+------------+-------+
+| Field | Type | Null | Key | Default    | Extra |
++-------+------+------+-----+------------+-------+
+| ddate | date | NO   | PRI | 0000-00-00 |       |
++-------+------+------+-----+------------+-------+
+1 row in set (0.05 sec)
+
+mysql> alter table country add column name char(2),timestamp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'timestamp' at line 1
+mysql> alter table country add column name char(2);
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++-------+---------+------+-----+------------+-------+
+| Field | Type    | Null | Key | Default    | Extra |
++-------+---------+------+-----+------------+-------+
+| ddate | date    | NO   | PRI | 0000-00-00 |       |
+| name  | char(2) | YES  |     | NULL       |       |
++-------+---------+------+-----+------------+-------+
+2 rows in set (0.05 sec)
+
+mysql> exit
+mysql> use sai;
+Database changed
+mysql> alter table country add numbers int not null after name;
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++---------+---------+------+-----+------------+-------+
+| Field   | Type    | Null | Key | Default    | Extra |
++---------+---------+------+-----+------------+-------+
+| ddate   | date    | NO   | PRI | 0000-00-00 |       |
+| name    | char(2) | YES  |     | NULL       |       |
+| numbers | int(11) | NO   |     | NULL       |       |
++---------+---------+------+-----+------------+-------+
+3 rows in set (0.06 sec)
+
+mysql> alter table country add abcd int not null;
+Query OK, 9 rows affected (0.08 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++---------+---------+------+-----+------------+-------+
+| Field   | Type    | Null | Key | Default    | Extra |
++---------+---------+------+-----+------------+-------+
+| ddate   | date    | NO   | PRI | 0000-00-00 |       |
+| name    | char(2) | YES  |     | NULL       |       |
+| numbers | int(11) | NO   |     | NULL       |       |
+| abcd    | int(11) | NO   |     | NULL       |       |
++---------+---------+------+-----+------------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table country modify column name not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 1
+mysql> alter table country modify  name not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 1
+mysql> exit
+create table countries(id int primary key,name varchar(11) not null,regionid int not null);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table student(id int not null,name varchar(11) not null primary key,age int not null,address varchar(11) not null,foreign key(id) references countries(id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc countries;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(11) | NO   |     | NULL    |       |
+| regionid | int(11)     | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.06 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int(11)     | NO   | MUL | NULL    |       |
+| name    | varchar(11) | NO   | PRI | NULL    |       |
+| age     | int(11)     | NO   |     | NULL    |       |
+| address | varchar(11) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+ insert into student values(1,"sai",21,"sjhdhww"),(2,"hxbh",32,"nkn"),(3,"jsjw",54,"kjdncn"),(4,"chbb",43,"nckc");
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`sai`.`student`, CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id`) REFERENCES `countries` (`id`))
+mysql> desc countries;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(11) | NO   |     | NULL    |       |
+| regionid | int(11)     | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.06 sec)
+
+mysql> insert into countries values(1,"sxkn",22),(2,"hwwq",34),(3,"dnel",8),(4,"eue",33),(4,"kcnnc",99),(5,"hooe",55);
+ERROR 1062 (23000): Duplicate entry '4' for key 'PRIMARY'
+mysql> insert into countries values(1,"sxkn",22),(2,"hwwq",34),(3,"dnel",8),(4,"eue",33),(5,"kcnnc",99),(6,"hooe",55);
+Query OK, 6 rows affected (0.05 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from countries;
++----+-------+----------+
+| id | name  | regionid |
++----+-------+----------+
+|  1 | sxkn  |       22 |
+|  2 | hwwq  |       34 |
+|  3 | dnel  |        8 |
+|  4 | eue   |       33 |
+|  5 | kcnnc |       99 |
+|  6 | hooe  |       55 |
++----+-------+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student values(1,"ncnc",57,"yieid"),(2,"ucniu",8,"jbdkcj"),(3,"jcnk",55,"cjdnkc"),(4,"nvknr",21,"rfrf"),(5,"nbnl",
+89,"jnnv"),(6,"jnnv",45,"vjvvv");
+Query OK, 6 rows affected (0.05 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select count(*) from student where age=10;
++----------+
+| count(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.05 sec)
+
+mysql> select count(*) rows from student where age=10;
++------+
+| rows |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)mysql> delete from student where id in(1,2);
+Query OK, 2 rows affected (0.06 sec)
+
+mysql> select *from student;
++----+-------+-----+---------+
+| id | name  | age | address |
++----+-------+-----+---------+
+|  3 | jcnk  |  55 | cjdnkc  |
+|  6 | jnnv  |  45 | vjvvv   |
+|  5 | nbnl  |  89 | jnnv    |
+|  4 | nvknr |  21 | rfrf    |
++----+-------+-----+---------+
+4 rows in set (0.01 sec)
+
+mysql> insert into student values(1,"kcnkc",25,"nkcn"),(2,"ncnc",57,"jnnd");
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select s.name,s.age from student s;
++-------+-----+
+| name  | age |
++-------+-----+
+| jcnk  |  55 |
+| jnnv  |  45 |
+| kcnkc |  25 |
+| nbnl  |  89 |
+| ncnc  |  57 |
+| nvknr |  21 |
++-------+-----+
+6 rows in set (0.00 sec)
+
+mysql> select s.name sname,s.age sage from student s;
++-------+------+
+| sname | sage |
++-------+------+
+| jcnk  |   55 |
+| jnnv  |   45 |
+| kcnkc |   25 |
+| nbnl  |   89 |
+| ncnc  |   57 |
+| nvknr |   21 |
++-------+------+
+6 rows in set (0.00 sec)
+
+mysql> create table classes(id int primary key,name varchar(11),department varchar(11));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into classes values(1,"nejn","fjf"),(2,"ncrf","nfff"),(3,"ljedj","cjnejd"),(4,"kcede","lnn");
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from studentl
+    -> 
+    -> 
+    -> 
+    -> ;
+ERROR 1146 (42S02): Table 'sai.studentl' doesn't exist
+mysql> select *from student;
++----+-------+-----+---------+
+| id | name  | age | address |
++----+-------+-----+---------+
+|  3 | jcnk  |  55 | cjdnkc  |
+|  6 | jnnv  |  45 | vjvvv   |
+|  1 | kcnkc |  25 | nkcn    |
+|  5 | nbnl  |  89 | jnnv    |
+|  2 | ncnc  |  57 | jnnd    |
+|  4 | nvknr |  21 | rfrf    |
++----+-------+-----+---------+
+6 rows in set (0.05 sec)
+
+mysql> select *from countries;
++----+-------+----------+
+| id | name  | regionid |
++----+-------+----------+
+|  1 | sxkn  |       22 |
+|  2 | hwwq  |       34 |
+|  3 | dnel  |        8 |
+|  4 | eue   |       33 |
+|  5 | kcnnc |       99 |
+|  6 | hooe  |       55 |
++----+-------+----------+
+6 rows in set (0.05 sec)
+
+mysql> select id,name from student s inner join countries c on c.id=s.id inner join classes cl on cl.id=s.id where s.id in (1,2,3,4,5);
+ERROR 1052 (23000): Column 'id' in field list is ambiguous
+mysql> select s.id,name from student s inner join countries c on c.id=s.id inner join classes cl on cl.id=s.id where s.id in (1,2,3,4,5);
+ERROR 1052 (23000): Column 'name' in field list is ambiguous
+mysql> select s.id,s.name from student s inner join countries c on c.id=s.id inner join classes cl on cl.id=s.id where s.id in (1,2,3,4,5);
++----+-------+
+| id | name  |
++----+-------+
+|  1 | kcnkc |
+|  2 | ncnc  |
+|  3 | jcnk  |
+|  4 | nvknr |
++----+-------+
+4 rows in set (0.05 sec)
+
+mysql> select age from student s inner join countries c on c.id=s.id inner join classes cl on cl.id=s.id where s.id in (1,2,3,4,5);
++-----+
+| age |
++-----+
+|  25 |
+|  57 |
+|  55 |
+|  21 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select address,c.name,s.name from student s full outer join countries c on c.id=s.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full outer join countries c on c.id=s.id' at line 1
+mysql> select address,c.name,s.name from student s full outer join countries c on c.id=s.id where c.region_id = 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full outer join countries c on c.id=s.id where c.region_id = 8' at line 1
+mysql> select address,c.name,s.name from student s countries c full outer join countries on c.id=s.id where c.region_id = 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'countries c full outer join countries on c.id=s.id where c.region_id = 8' at line 1
+mysql> select address,c.name,s.name from student s ,countries c full outer join countries on c.id=s.id where c.region_id = 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full outer join countries on c.id=s.id where c.region_id = 8' at line 1
+mysql> select address,c.name,s.name from student s ,countries c full outer join  on c.id=s.id where c.region_id = 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full outer join  on c.id=s.id where c.region_id = 8' at line 1
+mysql> 
+mysql> 
+mysql> select region_id from countries c full outer join student s on s.id=c.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full outer join student s on s.id=c.id' at line 1
+mysql> select s.name,c.name from student s, countries c cross join countries ;;
++-------+-------+
+| name  | name  |
++-------+-------+
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
+| kcnkc | sxkn  |
+| ncnc  | sxkn  |
+| jcnk  | sxkn  |
+| nvknr | sxkn  |
+| nbnl  | sxkn  |
+| jnnv  | sxkn  |
+| kcnkc | hwwq  |
+| ncnc  | hwwq  |
+| jcnk  | hwwq  |
+| nvknr | hwwq  |
+| nbnl  | hwwq  |
+| jnnv  | hwwq  |
+| kcnkc | dnel  |
+| ncnc  | dnel  |
+| jcnk  | dnel  |
+| nvknr | dnel  |
+| nbnl  | dnel  |
+| jnnv  | dnel  |
+| kcnkc | eue   |
+| ncnc  | eue   |
+| jcnk  | eue   |
+| nvknr | eue   |
+| nbnl  | eue   |
+| jnnv  | eue   |
+| kcnkc | kcnnc |
+| ncnc  | kcnnc |
+| jcnk  | kcnnc |
+| nvknr | kcnnc |
+| nbnl  | kcnnc |
+| jnnv  | kcnnc |
+| kcnkc | hooe  |
+| ncnc  | hooe  |
+| jcnk  | hooe  |
+| nvknr | hooe  |
+| nbnl  | hooe  |
+| jnnv  | hooe  |
++-------+-------+
+216 rows in set (0.00 sec)
+
+ERROR: 
+No query specified
+
+mysql> select avg(id) from student group by name;
++---------+
+| avg(id) |
++---------+
+|  3.0000 |
+|  6.0000 |
+|  1.0000 |
+|  5.0000 |
+|  2.0000 |
+|  4.0000 |
++---------+
+6 rows in set (0.06 sec)
+
+mysql> select round(avg(id),2) from student group by name;
++------------------+
+| round(avg(id),2) |
++------------------+
+|             3.00 |
+|             6.00 |
+|             1.00 |
+|             5.00 |
+|             2.00 |
+|             4.00 |
++------------------+
+6 rows in set (0.05 sec)
+
+mysql> select round(avg(id),2) average from student group by name;
++---------+
+| average |
++---------+
+|    3.00 |
+|    6.00 |
+|    1.00 |
+|    5.00 |
+|    2.00 |
+|    4.00 |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> select address from student s inner join countries c on c.id=s.id group by name having id <3 order by id desc;
+ERROR 1052 (23000): Column 'id' in order clause is ambiguous
+mysql> select address from student s inner join countries c on c.id=s.id group by name having id <3 order by s.id desc;
+ERROR 1052 (23000): Column 'name' in group statement is ambiguous
+mysql> select address from student s inner join countries c on c.id=s.id group by s.name having id <3 order by s.id desc;
+ERROR 1054 (42S22): Unknown column 'id' in 'having clause'
+mysql> select address from student s inner join countries c on c.id=s.id group by name having s.id <3 order by s.id desc;
+ERROR 1052 (23000): Column 'name' in group statement is ambiguous
+mysql> select address from student s inner join countries c on c.id=s.id group by s.name having s.id <3 order by s.id desc;
+ERROR 1054 (42S22): Unknown column 's.id' in 'having clause'
+mysql> select address from student s inner join countries c on c.id=s.id group by s.name having c.id <3 order by s.id desc;
+ERROR 1054 (42S22): Unknown column 'c.id' in 'having clause'
+mysql> 
+mysql> select sum(id) from student;
++---------+
+| sum(id) |
++---------+
+|      21 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> create view details (sid,sname,sage) as select s.id,s.name,address from student s inner join countries c on c.id= s.id ;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select *from details;
++-----+-------+--------+
+| sid | sname | sage   |
++-----+-------+--------+
+|   3 | jcnk  | cjdnkc |
+|   6 | jnnv  | vjvvv  |
+|   1 | kcnkc | nkcn   |
+|   5 | nbnl  | jnnv   |
+|   2 | ncnc  | jnnd   |
+|   4 | nvknr | rfrf   |
++-----+-------+--------+
+6 rows in set (0.00 sec)
+
+mysql> create or replace details as select select s.id,s.name,address from student s inner join countries c on c.id=s.id group by s.name having s.id <4 order by s.name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select select s.id,s.name,address from student s inner join countries' at line 1
+mysql> create or replace details as select select s.id,s.name,address from student s inner join countries c on c.id=s.id group by s.name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select select s.id,s.name,address from student s inner join countries' at line 1
+mysql> create or replace details as select s.id,s.name,s.address from student s inner join countries c on c.id=s.id group by s.name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select s.id,s.name,s.address from student s inner join countries c on' at line 1
+mysql> create or replace details as select s.id,s.name,s.address from student s inner join countries c on c.id=s.id group by address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select s.id,s.name,s.address from student s inner join countries c on' at line 1
+mysql> create or replace details as select s.id,s.name,s.address from student s inner join countries c on c.id=s.id order by address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select s.id,s.name,s.address from student s inner join countries c on' at line 1
+mysql> create or replace details as select s.id,s.name,s.address from student s inner join countries c on c.id=s.id order by address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'details as select s.id,s.name,s.address from student s inner join countries c on' at line 1
+mysql> drop view details;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create view details (sid,sname,sage) as select s.id,s.name,address from student s inner join countries c on c.id= s.id ;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table salary (eid int , changed datetime default CURRENT_TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2));
+ERROR 1067 (42000): Invalid default value for 'changed'
+mysql> create table salary (eid int , changed DATETIME DEFAULT CURRENT_TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2));
+ERROR 1067 (42000): Invalid default value for 'changed'
+mysql> CREATE TABLE salary_changes (
+    ->     employee_id INT,
+    ->     changed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ->     old_salary DECIMAL(8 , 2 ),
+    ->     new_salary DECIMAL(8 , 2 ),
+    ->     PRIMARY KEY (employee_id , changed_at)
+    -> );
+ERROR 1067 (42000): Invalid default value for 'changed_at'
+mysql> create table salary (eid int , changed DATETIME  CURRENT_TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2))' at line 1
+mysql> create table salary (eid int , changed DATETIME DEFAULT TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'oldsal decimal(8,2),newsal decimal(8,2))' at line 1
+mysql> create table salary (eid int , changed TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,oldsal decimal(8,2),newsal decimal(8,2));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create trigger salary_event before update on salary for each row 
+    -> begin
+    -> if NEW.;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create trigger salary_event before update on student for each row 
+    -> begin
+    -> if NEW.id<> OLD.id then insert into salary(eid , oldsal,newsal) values (NEW.eid,NEW.id,NEW.id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> if NEW.id<> OLD.id then insert into salary(eid , oldsal,newsal) values (NEW.eid,NEW.id,NEW.id);end if; end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'if NEW.id<> OLD.id then insert into salary(eid , oldsal,newsal) values (NEW.eid,' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end if' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> create trigger salary_event before update on student for each row 
+    -> begin
+    -> if NEW.id<> OLD.id then insert into salary(eid , oldsal,newsal) values (NEW.eid,NEW.id,NEW.id); end if;end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end if' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> create trigger salary_event before update on student for each row begin if NEW.id <> OLD.id then insert into salary eid valuesNEW.eid; end if;end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'eid valuesNEW.eid' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end if' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> exit
+
+create trigger agecheck before insert  on student for each row if NEW.id>0 then set NEW.id=0; end if;//
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into student values(34) ;
+    -> //;
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+    -> insert into student values(56,"mxwws",44,"bccc");
+    -> ;
+    ->
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ';
+insert into student values(56,"mxwws",44,"bccc")' at line 1
+mysql> insert into student values(56,"mxwws",44,"bccc");
+    -> ;
+    -> //
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`sai`.`student`, CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id`) REFERENCES `countries` (`id`))
+mysql> create trigger agecheck before insert  on salary for each row if NEW.id>0 then set NEW.id=0; end if;//
+ERROR 1054 (42S22): Unknown column 'id' in 'NEW'
+mysql> drop table salary
+    -> ;
+    -> //
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table salary(id int , name varchar(11));
+    -> //
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create trigger change_event before insert on salary for each row if NEW.id>0 then set NEW.id=8;end if;//
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into salary values(1,"snk"),(-1,"cknc");
+    -> //
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select *from change_event;
+    -> //
+ERROR 1146 (42S02): Table 'sai.change_event' doesn't exist
+mysql> create table change_event(id int,name varchar(11) );
+    -> //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into salary values(1,"snk"),(-1,"cknc");//
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select *from change_event;
+    -> //
+Empty set (0.01 sec)
